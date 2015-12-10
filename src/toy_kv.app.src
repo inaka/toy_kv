@@ -1,0 +1,20 @@
+{application, toy_kv,
+ [
+  {description, "Toy KV Store"},
+  {vsn, "0.0.1"},
+  {registered, []},
+  {mod, {toy_kv_app, []}},
+  {applications,
+   [
+    kernel,
+    stdlib,
+    mnesia
+   ]
+  },
+  {env,[]},
+  {modules, []},
+  {contributors, []},
+  {licenses, []},
+  {links, []}
+ ]
+}.
