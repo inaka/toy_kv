@@ -3,7 +3,7 @@
 A simple and reduced Key-Value Store written in Erlang.
 
 > **Note:**
-> This project was done for educational and demonstrative purposes.
+> This project was done for educational and demonstrative purposes only.
 
 ## Building toy_kv
 
