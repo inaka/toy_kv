@@ -129,18 +129,19 @@ t_join_leave_ops(Config) ->
 %%==============================================================================
 
 start_slaves() ->
-  Nodes = [a, b, c, d],
+  Nodes = ['a@127.0.0.1', 'b@127.0.0.1', 'c@127.0.0.1', 'd@127.0.0.1'],
   start_slaves(Nodes, []).
 
 start_slaves([], Acc) -> Acc;
 start_slaves([Node | T], Acc) ->
   ErlFlags = "-pa ../../_build/default/lib/*/ebin " ++
     "-config ../../test/dist_test.config",
-  {ok, HostNode} = ct_slave:start(Node,
-    [{kill_if_fail, true}, {monitor_master, true},
+  _ = net_kernel:start(['toy_kv@127.0.0.1']),
+  ct_slave:start(Node,
+    [{boot_timeout, 1}, {monitor_master, true},
      {init_timeout, 3000}, {startup_timeout, 3000},
      {startup_functions, [{toy_kv, start, []}]},
      {erl_flags, ErlFlags}]),
-  ct:print("\e[32m ---> Node ~p [OK] \e[0m", [HostNode]),
-  pong = net_adm:ping(HostNode),
-  start_slaves(T, [HostNode | Acc]).
+  pong = net_adm:ping(Node),
+  ct:print("\e[32m ---> Node ~p [OK] \e[0m", [Node]),
+  start_slaves(T, [Node | Acc]).
